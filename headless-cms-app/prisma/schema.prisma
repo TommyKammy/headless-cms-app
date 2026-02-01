@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model ContentModel {
+  id          String   @id @default(uuid())
+  name        String
+  apiId       String   @unique
+  description String?
+  fields      Field[]
+  contents    Content[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Field {
+  id             String       @id @default(uuid())
+  name           String
+  fieldId        String
+  type           String
+  required       Boolean      @default(false)
+  contentModel   ContentModel @relation(fields: [contentModelId], references: [id], onDelete: Cascade)
+  contentModelId String
+}
+
+model Content {
+  id             String       @id @default(uuid())
+  contentModel   ContentModel @relation(fields: [contentModelId], references: [id], onDelete: Cascade)
+  contentModelId String
+  data           String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}

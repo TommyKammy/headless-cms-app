@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヘッドレスCMS - 管理画面</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ヘッドレスCMS</h1>
+            <nav>
+                <a href="/" class="active">ダッシュボード</a>
+                <a href="/models.html">コンテンツモデル</a>
+                <a href="/contents.html">コンテンツ</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <h2>ダッシュボード</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>コンテンツモデル</h3>
+                        <p class="stat-number" id="modelCount">-</p>
+                        <a href="/models.html" class="btn">管理する</a>
+                    </div>
+                    <div class="stat-card">
+                        <h3>コンテンツ</h3>
+                        <p class="stat-number" id="contentCount">-</p>
+                        <a href="/contents.html" class="btn">管理する</a>
+                    </div>
+                </div>
+
+                <div class="api-info">
+                    <h3>API情報</h3>
+                    <div class="info-box">
+                        <p><strong>管理API:</strong> <code>/api/admin</code></p>
+                        <p><strong>公開API:</strong> <code>/api/v1/:modelId</code></p>
+                        <p><strong>API Key:</strong> <code id="apiKeyDisplay">your-api-key-here</code></p>
+                    </div>
+                </div>
+
+                <div class="quick-start">
+                    <h3>クイックスタート</h3>
+                    <ol>
+                        <li><a href="/models.html">コンテンツモデル</a>でスキーマを定義</li>
+                        <li><a href="/contents.html">コンテンツ</a>でデータを作成</li>
+                        <li>API経由でデータを取得</li>
+                    </ol>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script>
+        async function loadDashboard() {
+            try {
+                const models = await api.getModels();
+                document.getElementById('modelCount').textContent = models.length;
+                
+                let totalContents = 0;
+                models.forEach(model => {
+                    totalContents += model._count?.contents || 0;
+                });
+                document.getElementById('contentCount').textContent = totalContents;
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+            }
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>

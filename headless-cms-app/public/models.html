@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンテンツモデル - ヘッドレスCMS</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ヘッドレスCMS</h1>
+            <nav>
+                <a href="/">ダッシュボード</a>
+                <a href="/models.html" class="active">コンテンツモデル</a>
+                <a href="/contents.html">コンテンツ</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="models-section">
+                <div class="section-header">
+                    <h2>コンテンツモデル</h2>
+                    <button class="btn btn-primary" onclick="showCreateModal()">新規作成</button>
+                </div>
+
+                <div id="modelsList" class="models-list">
+                    <p>読み込み中...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">コンテンツモデルを作成</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="modelForm">
+                <input type="hidden" id="modelId">
+                
+                <div class="form-group">
+                    <label for="name">名前</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="apiId">API ID</label>
+                    <input type="text" id="apiId" required pattern="[a-z0-9_-]+" placeholder="例: blog-post">
+                    <small>小文字、数字、ハイフン、アンダースコアのみ使用可能</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">説明</label>
+                    <textarea id="description" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>フィールド</label>
+                    <div id="fieldsContainer">
+                        <div class="field-item">
+                            <input type="text" placeholder="フィールド名" class="field-name" required>
+                            <input type="text" placeholder="フィールドID" class="field-id" required pattern="[a-z0-9_-]+">
+                            <select class="field-type">
+                                <option value="TEXT">テキスト</option>
+                                <option value="NUMBER">数値</option>
+                                <option value="BOOLEAN">真偽値</option>
+                                <option value="DATE">日付</option>
+                                <option value="RICHTEXT">リッチテキスト</option>
+                            </select>
+                            <label><input type="checkbox" class="field-required"> 必須</label>
+                            <button type="button" class="btn btn-danger btn-small" onclick="removeField(this)">削除</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addField()">フィールドを追加</button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn" onclick="closeModal()">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/models.js"></script>
+</body>
+</html>
