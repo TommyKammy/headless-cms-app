@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sleep infinity
+    
+    # ▼▼▼ ここが重要です ▼▼▼
+    volumes:
+      # プロジェクトルート（..）をコンテナの /workspace にマウント
+      - ..:/workspace:cached
+      
+    # ユーザー設定
+    user: node

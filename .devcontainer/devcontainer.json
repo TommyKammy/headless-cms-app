@@ -3,9 +3,13 @@
 {
 	"name": "Node.js & TypeScript",
 	// Use Dockerfile for custom setup
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+	// "build": {
+	//	"dockerfile": "Dockerfile"
+	//},
+
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
 
 	"features": {
 		"ghcr.io/devcontainers/features/copilot-cli:1": {},
