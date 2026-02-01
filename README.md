@@ -54,17 +54,13 @@ cd headless-cms-app
 npm install
 ```
 
-3. 環境変数を設定
+ 3. 環境変数を設定
 ```bash
-cp .env.example .env
-```
-
-.envファイルの内容：
-```
-DATABASE_URL="file:./dev.db"
-PORT=3000
-JWT_SECRET="your-secret-key"
-API_KEY="your-api-key"
+# .envファイルを作成し、以下を設定
+echo "DATABASE_URL=\"file:./dev.db\"" >> .env
+echo "PORT=3000" >> .env
+echo "JWT_SECRET=\"your-secret-key\"" >> .env
+echo "API_KEY=\"your-api-key\"" >> .env
 ```
 
 4. データベースをセットアップ
@@ -225,11 +221,24 @@ GET /api/v1/:modelId/:contentId
 ## プロジェクト構造
 
 ```
+.
+├── .devcontainer/             # 開発環境設定
+│   ├── devcontainer.json
+│   ├── docker-compose.yml
+│   ├── init.sh
+│   └── opencode_config.json
+├── .oh-my-opencode/           # opencodeエージェント設定
+│   ├── agents/
+│   ├── snippets/
+│   └── README.md
+├── CMS_DEVELOPMENT_PLAN.md    # 開発計画ドキュメント
 ├── prisma/
 │   ├── schema.prisma          # データベーススキーマ定義
 │   └── migrations/            # マイグレーション履歴
 ├── public/
 │   ├── index.html             # 管理画面
+│   ├── css/
+│   │   └── style.css
 │   └── js/
 │       └── api.js             # フロントエンドAPI連携
 ├── src/
@@ -246,7 +255,9 @@ GET /api/v1/:modelId/:contentId
 │   └── middleware/
 │       └── auth.js            # 認証ミドルウェア
 ├── package.json
-├── .env                       # 環境変数（git無視）
+├── package-lock.json
+├── prisma/
+│   └── migration_lock.toml
 └── README.md
 ```
 
@@ -272,7 +283,7 @@ GET /api/v1/:modelId/:contentId
   id: String (UUID)
   name: String              // フィールド名
   fieldId: String           // API識別子
-  type: String              // テキスト、リッチテキストなど
+  type: String              // テキスト、リッチテキストなど（詳細はprisma/schema.prisma参照）
   required: Boolean
   contentModelId: String    // 所属モデル
 }
@@ -313,3 +324,32 @@ MIT
 ## 開発者
 
 Tommy Kawada
+
+## 関連ドキュメント
+
+- [CMS開発計画](./CMS_DEVELOPMENT_PLAN.md) - プロジェクトの開発計画と仕様
+
+## 開発環境
+
+### VS Code Dev Container
+このプロジェクトには Docker-based Dev Container が含まれており、VS Codeで直接開発環境を設定できます：
+
+```bash
+# VS CodeのDev Container拡張を使用して開始
+code .
+```
+
+**Dev Container 機能:**
+- Pre-configured Node.js & TypeScript environment
+- Prisma CLI support
+- SSH access
+- GitHub Copilot CLI integration
+
+### 開発ツール
+- [nodemon](https://nodemon.io/) - 自動リロード（npm run devで使用）
+- [Prisma Studio](https://www.prisma.io/docs/studio) - データベースGUIツール（npm run db:studioで使用）
+- [Prisma](https://www.prisma.io/) - データベースアクセス（npm run db:generateでクライアント生成）
+
+### OpenCode Integration
+- [OpenCode](https://opencode.ai) - AI-driven development assistant
+- Configured for both local and remote development workflows
