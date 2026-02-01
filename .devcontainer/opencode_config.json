@@ -21,8 +21,8 @@
   "mode": {
     "build": {
       "mode": "primary",
-      "description": "実装・修正（kimi-k2.5-free / no web）",
-      "model": "opencode/kimi-k2.5-free",
+      "description": "実装・修正（glm-4.7-flash / no web）",
+      "model": "zai-coding-plan/glm-4.7-flash",
       "tools": {
         "read": true,
         "write": true,
@@ -38,8 +38,8 @@
     },
     "general": {
       "mode": "subagent",
-      "description": "要約・雑談（local GLM / no web）",
-      "model": "nvidia/moonshotai/kimi-k2.5",
+      "description": "要約・雑談（glm-4.7-flash / no web）",
+      "model": "zai-coding-plan/glm-4.7-flash",
       "tools": {
         "read": true,
         "write": true,
@@ -55,7 +55,7 @@
     },
     "explore": {
       "mode": "subagent",
-      "description": "Web調査（opencode/kimi-k2.5-free / web tools）",
+      "description": "Web調査（glm-4.7-flash / web tools）",
       "model": "glm-4.7-flash (local)",
       "tools": {
         "webfetch": true,
@@ -69,7 +69,7 @@
     "oracle": {
       "mode": "subagent",
       "description": "設計・判断（local glm4.7 flash / 基本 read-only）",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-4.7-flash",
       "tools": {
         "read": true,
         "grep": true,
@@ -82,7 +82,7 @@
     "sisyphus": {
       "mode": "primary",
       "description": "メインオーケストレーター（方針決め→振り分け→統括）",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-4.7-flash",
       "tools": {
         "read": true,
         "grep": true,
