@@ -1,46 +1,41 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "Node.js & TypeScript",
-	// Use Dockerfile for custom setup
-	// "build": {
-	//	"dockerfile": "Dockerfile"
-	//},
+    "name": "Node.js & TypeScript",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
 
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
-	"workspaceFolder": "/workspace",
+    "features": {
+        "ghcr.io/devcontainers/features/copilot-cli:1": {},
+        "ghcr.io/devcontainers/features/sshd:1": {},
+        "ghcr.io/devcontainers-extra/features/prisma:2": {}
+    },
 
-	"features": {
-		"ghcr.io/devcontainers/features/copilot-cli:1": {},
-		"ghcr.io/devcontainers/features/sshd:1": {},
-		"ghcr.io/devcontainers-extra/features/prisma:2": {}
-	},
+    // 修正ポイント: chown の対象を .local 全体に変更
+    // これにより .local/share/opencode (ボリューム) も .local/state (新規作成) も node 権限になります
+    "postCreateCommand": "sudo chown -R node:node /home/node/.local && bash /tmp/init.sh && npm install && mkdir -p ~/.config/opencode && ln -sf $(pwd)/.devcontainer/opencode_config.json ~/.config/opencode/opencode.json",
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash /tmp/init.sh && npm install",
+    "remoteEnv": {
+        "OH_MY_OPENCODE_ENABLED": "true"
+    },
 
-	// Set environment variables
-	"remoteEnv": {
-		"OH_MY_OPENCODE_ENABLED": "true"
-	},
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shellArgs.linux": ["-l"],
+                "terminal.integrated.profiles.linux": {
+                    "zsh": {
+                        "path": "/bin/zsh",
+                        "args": ["-l", "-i"]
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "zsh"
+            }
+        }
+    },
 
-	// Configure tool-specific properties.
-	"customizations": {
-		"vscode": {
-			"settings": {
-				"terminal.integrated.shellArgs.linux": ["-l"],
-				"terminal.integrated.profiles.linux": {
-					"zsh": {
-						"path": "/bin/zsh",
-						"args": ["-l", "-i"]
-					}
-				},
-				"terminal.integrated.defaultProfile.linux": "zsh"
-			}
-		}
-	}
+    "mounts": [
+        "source=opencode-auth-data,target=/home/node/.local/share/opencode,type=volume"
+    ],
 
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+    "remoteUser": "node"
 }

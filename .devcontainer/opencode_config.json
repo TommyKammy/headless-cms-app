@@ -1,0 +1,96 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/glm-4.7-free",
+  "provider": {
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:1234/v1"
+      },
+      "models": {
+        "zai-org/glm-4.7-flash": {
+          "name": "glm-4.7-flash (local)"
+        },
+        "nvidia/nemotron-3-nano": {
+          "name": "nemotron-3-nano (local)"
+        }
+      }
+    }
+  },
+  "mode": {
+    "build": {
+      "mode": "primary",
+      "description": "実装・修正（kimi-k2.5-free / no web）",
+      "model": "opencode/kimi-k2.5-free",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "webfetch": false,
+        "websearch": false,
+        "codesearch": false
+      }
+    },
+    "general": {
+      "mode": "subagent",
+      "description": "要約・雑談（local GLM / no web）",
+      "model": "nvidia/moonshotai/kimi-k2.5",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": false,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "webfetch": false,
+        "websearch": false,
+        "codesearch": false
+      }
+    },
+    "explore": {
+      "mode": "subagent",
+      "description": "Web調査（opencode/kimi-k2.5-free / web tools）",
+      "model": "glm-4.7-flash (local)",
+      "tools": {
+        "webfetch": true,
+        "websearch": true,
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true
+      }
+    },
+    "oracle": {
+      "mode": "subagent",
+      "description": "設計・判断（local glm4.7 flash / 基本 read-only）",
+      "model": "zai-coding-plan/glm-4.7",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "webfetch": false,
+        "websearch": false
+      }
+    },
+    "sisyphus": {
+      "mode": "primary",
+      "description": "メインオーケストレーター（方針決め→振り分け→統括）",
+      "model": "zai-coding-plan/glm-4.7",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "webfetch": true,
+        "websearch": true
+      }
+    }
+  }
+}
