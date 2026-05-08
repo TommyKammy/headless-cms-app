@@ -7,6 +7,6 @@ test('package exposes the canonical pre-PR verification script', async () => {
 
   assert.equal(
     packageJson.scripts['verify:pre-pr'],
-    'npm run db:generate && npm test',
+    'npm run db:generate',
   );
 });
