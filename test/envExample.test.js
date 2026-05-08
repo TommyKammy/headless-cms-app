@@ -41,4 +41,8 @@ test('README setup points developers to copy the example env file', async () => 
   const readme = await readFile('README.md', 'utf8');
 
   assert.match(readme, /cp \.env\.example \.env/);
+
+  for (const key of ['DATABASE_URL', 'PORT', 'JWT_SECRET', 'API_KEY']) {
+    assert.match(readme, new RegExp(`\\b${key}\\b`));
+  }
 });
