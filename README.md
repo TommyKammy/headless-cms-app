@@ -94,6 +94,9 @@ npm run dev
 # 本番サーバー起動
 npm start
 
+# PR前の検証
+npm run verify:pre-pr
+
 # データベースマイグレーション
 npm run db:migrate
 
