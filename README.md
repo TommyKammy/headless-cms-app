@@ -59,6 +59,7 @@ npm install
 # .env.exampleをコピーし、ローカル環境に合わせて値を編集
 cp .env.example .env
 ```
+コピー後、`.env` 内の `DATABASE_URL`、`PORT`、`JWT_SECRET`、`API_KEY` をローカル環境に合わせて設定してください。
 
 4. データベースをセットアップ
 ```bash
