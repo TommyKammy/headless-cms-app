@@ -54,13 +54,10 @@ cd headless-cms-app
 npm install
 ```
 
- 3. 環境変数を設定
+3. 環境変数を設定
 ```bash
-# .envファイルを作成し、以下を設定
-echo "DATABASE_URL=\"file:./dev.db\"" >> .env
-echo "PORT=3000" >> .env
-echo "JWT_SECRET=\"your-secret-key\"" >> .env
-echo "API_KEY=\"your-api-key\"" >> .env
+# .env.exampleをコピーし、ローカル環境に合わせて値を編集
+cp .env.example .env
 ```
 
 4. データベースをセットアップ
